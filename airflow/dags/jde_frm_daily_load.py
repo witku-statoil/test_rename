@@ -33,9 +33,9 @@ varStgSchema = 'stg_' + varJDESchema
 
 constFileFilter     = '*' #'{{ ds }}'
 constFileFilterRegex  = '.*' #'{{ ds_nodash }}'
-varDWH_connID = 'bi-eur-dwh-etl-staticrc10'
+#varDWH_connID = 'bi-eur-dwh-etl-staticrc10'
 #varDWH_connID = 'test-cp-etl-staticrc10'
-#varDWH_connID = 'test-cp_compute-etl-staticrc10'
+varDWH_connID = 'test-cp_compute-etl-staticrc10'
 varAZBlobStorMntPtLanding = '/u01/data/dw-landing-fs' #'/u01/dw-landing-fs'
 #varLanding_connID = 'bf-landing'
 varAZBlobStorMntPtPermStor = '/u01/data/dw-permstore-fs' #'/u01/dw-permstore-fs'
