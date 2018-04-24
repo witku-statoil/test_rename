@@ -1,0 +1,50 @@
+-- Apply updates from upsert table onto rep new table
+UPDATE rep_jde_qat.f0012_new
+SET
+	[sys_file_name] = cdc.[sys_file_name]
+	,[sys_file_ln] = cdc.[sys_file_ln]
+	,[sys_extract_dt] = cdc.[sys_extract_dt]
+	,[sys_cdc_dt] = cdc.[sys_cdc_dt]
+	,[sys_cdc_scn] = cdc.[sys_cdc_scn]
+	,[sys_cdc_operation_type] = cdc.[sys_cdc_operation_type]
+	,[sys_cdc_before_after] = cdc.[sys_cdc_before_after]
+	,[sys_line_modified_ind] = cdc.[sys_line_modified_ind]
+	,[kgitem] = cdc.[kgitem]
+	,[kgitem_conv] = cdc.[kgitem_conv]
+	,[kgco] = cdc.[kgco]
+	,[kgco_conv] = cdc.[kgco_conv]
+	,[kgmcu] = cdc.[kgmcu]
+	,[kgmcu_conv] = cdc.[kgmcu_conv]
+	,[kgobj] = cdc.[kgobj]
+	,[kgobj_conv] = cdc.[kgobj_conv]
+	,[kgsub] = cdc.[kgsub]
+	,[kgsub_conv] = cdc.[kgsub_conv]
+	,[kgdl01] = cdc.[kgdl01]
+	,[kgdl01_conv] = cdc.[kgdl01_conv]
+	,[kgdl02] = cdc.[kgdl02]
+	,[kgdl02_conv] = cdc.[kgdl02_conv]
+	,[kgdl03] = cdc.[kgdl03]
+	,[kgdl03_conv] = cdc.[kgdl03_conv]
+	,[kgdl04] = cdc.[kgdl04]
+	,[kgdl04_conv] = cdc.[kgdl04_conv]
+	,[kgdl05] = cdc.[kgdl05]
+	,[kgdl05_conv] = cdc.[kgdl05_conv]
+	,[kgmopt] = cdc.[kgmopt]
+	,[kgoopt] = cdc.[kgoopt]
+	,[kgsopt] = cdc.[kgsopt]
+	,[kgsy] = cdc.[kgsy]
+	,[kgseqn] = cdc.[kgseqn]
+	,[kguser] = cdc.[kguser]
+	,[kguser_conv] = cdc.[kguser_conv]
+	,[kgpid] = cdc.[kgpid]
+	,[kgpid_conv] = cdc.[kgpid_conv]
+	,[kgupmj] = cdc.[kgupmj]
+	,[kgupmj_conv] = cdc.[kgupmj_conv]
+	,[kgjobn] = cdc.[kgjobn]
+	,[kgjobn_conv] = cdc.[kgjobn_conv]
+	,[kgupmt] = cdc.[kgupmt] -- exclude distribution column
+FROM stg_jde_qat.tmp_upsert_f0012_cdc cdc
+WHERE
+    rep_jde_qat.f0012_new.sys_integration_id = cdc.sys_integration_id
+    AND rep_jde_qat.f0012_new.sys_cdc_scn < cdc.sys_cdc_scn 
+OPTION ( LABEL = 'UPDATE_rep_jde_qat.f0012_new AF:{{ task_instance_key_str }}' ) 

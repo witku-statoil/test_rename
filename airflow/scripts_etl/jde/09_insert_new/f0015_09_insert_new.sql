@@ -1,0 +1,81 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde.f0015_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,cxcrcd
+	,cxcrcd_conv
+	,cxcrdc
+	,cxcrdc_conv
+	,cxan8
+	,cxrttyp
+	,cxeft
+	,cxeft_conv
+	,cxclmeth
+	,cxclmeth_conv
+	,cxcrcm
+	,cxcrcm_conv
+	,cxtrcr
+	,cxtrcr_conv
+	,cxcrr
+	,cxcrrd
+	,cxcsr
+	,cxcsr_conv
+	,cxuser
+	,cxuser_conv
+	,cxpid
+	,cxpid_conv
+	,cxjobn
+	,cxjobn_conv
+	,cxupmj
+	,cxupmj_conv
+	,cxupmt
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.cxcrcd
+	,cdc.cxcrcd_conv
+	,cdc.cxcrdc
+	,cdc.cxcrdc_conv
+	,cdc.cxan8
+	,cdc.cxrttyp
+	,cdc.cxeft
+	,cdc.cxeft_conv
+	,cdc.cxclmeth
+	,cdc.cxclmeth_conv
+	,cdc.cxcrcm
+	,cdc.cxcrcm_conv
+	,cdc.cxtrcr
+	,cdc.cxtrcr_conv
+	,cdc.cxcrr
+	,cdc.cxcrrd
+	,cdc.cxcsr
+	,cdc.cxcsr_conv
+	,cdc.cxuser
+	,cdc.cxuser_conv
+	,cdc.cxpid
+	,cdc.cxpid_conv
+	,cdc.cxjobn
+	,cdc.cxjobn_conv
+	,cdc.cxupmj
+	,cdc.cxupmj_conv
+	,cdc.cxupmt
+FROM stg_jde.tmp_upsert_f0015_cdc cdc
+LEFT OUTER JOIN rep_jde.f0015_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde.f0015_new AF:{{ task_instance_key_str }}' ) 

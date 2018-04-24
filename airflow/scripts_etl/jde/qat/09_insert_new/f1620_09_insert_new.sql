@@ -1,0 +1,75 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde_qat.f1620_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,ctabt1
+	,ctabt1_conv
+	,ctdl01
+	,ctdl01_conv
+	,ctcmer
+	,ctfile
+	,ctfile_conv
+	,ctdtai
+	,ctdtai_conv
+	,ctvalr
+	,ctcmvl
+	,ctcmvl_conv
+	,ctsy
+	,ctrt
+	,ctrt_conv
+	,ctuser
+	,ctuser_conv
+	,ctpid
+	,ctpid_conv
+	,ctupmj
+	,ctupmj_conv
+	,ctupmt
+	,ctjobn
+	,ctjobn_conv
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.ctabt1
+	,cdc.ctabt1_conv
+	,cdc.ctdl01
+	,cdc.ctdl01_conv
+	,cdc.ctcmer
+	,cdc.ctfile
+	,cdc.ctfile_conv
+	,cdc.ctdtai
+	,cdc.ctdtai_conv
+	,cdc.ctvalr
+	,cdc.ctcmvl
+	,cdc.ctcmvl_conv
+	,cdc.ctsy
+	,cdc.ctrt
+	,cdc.ctrt_conv
+	,cdc.ctuser
+	,cdc.ctuser_conv
+	,cdc.ctpid
+	,cdc.ctpid_conv
+	,cdc.ctupmj
+	,cdc.ctupmj_conv
+	,cdc.ctupmt
+	,cdc.ctjobn
+	,cdc.ctjobn_conv
+FROM stg_jde_qat.tmp_upsert_f1620_cdc cdc
+LEFT OUTER JOIN rep_jde_qat.f1620_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde_qat.f1620_new AF:{{ task_instance_key_str }}' ) 

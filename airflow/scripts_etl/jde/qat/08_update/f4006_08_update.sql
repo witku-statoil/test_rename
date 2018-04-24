@@ -1,0 +1,53 @@
+-- Apply updates from upsert table onto rep new table
+UPDATE rep_jde_qat.f4006_new
+SET
+	[sys_file_name] = cdc.[sys_file_name]
+	,[sys_file_ln] = cdc.[sys_file_ln]
+	,[sys_extract_dt] = cdc.[sys_extract_dt]
+	,[sys_cdc_dt] = cdc.[sys_cdc_dt]
+	,[sys_cdc_scn] = cdc.[sys_cdc_scn]
+	,[sys_cdc_operation_type] = cdc.[sys_cdc_operation_type]
+	,[sys_cdc_before_after] = cdc.[sys_cdc_before_after]
+	,[sys_line_modified_ind] = cdc.[sys_line_modified_ind]
+	,[oadoco] = cdc.[oadoco]
+	,[oadcto] = cdc.[oadcto]
+	,[oakcoo] = cdc.[oakcoo]
+	,[oakcoo_conv] = cdc.[oakcoo_conv]
+	,[oaanty] = cdc.[oaanty]
+	,[oamlnm] = cdc.[oamlnm]
+	,[oamlnm_conv] = cdc.[oamlnm_conv]
+	,[oaadd1] = cdc.[oaadd1]
+	,[oaadd1_conv] = cdc.[oaadd1_conv]
+	,[oaadd2] = cdc.[oaadd2]
+	,[oaadd2_conv] = cdc.[oaadd2_conv]
+	,[oaadd3] = cdc.[oaadd3]
+	,[oaadd3_conv] = cdc.[oaadd3_conv]
+	,[oaadd4] = cdc.[oaadd4]
+	,[oaadd4_conv] = cdc.[oaadd4_conv]
+	,[oaaddz] = cdc.[oaaddz]
+	,[oaaddz_conv] = cdc.[oaaddz_conv]
+	,[oacty1] = cdc.[oacty1]
+	,[oacty1_conv] = cdc.[oacty1_conv]
+	,[oacoun] = cdc.[oacoun]
+	,[oaadds] = cdc.[oaadds]
+	,[oacrte] = cdc.[oacrte]
+	,[oacrte_conv] = cdc.[oacrte_conv]
+	,[oabkml] = cdc.[oabkml]
+	,[oabkml_conv] = cdc.[oabkml_conv]
+	,[oactr] = cdc.[oactr]
+	,[oauser] = cdc.[oauser]
+	,[oauser_conv] = cdc.[oauser_conv]
+	,[oapid] = cdc.[oapid]
+	,[oapid_conv] = cdc.[oapid_conv]
+	,[oaupmj] = cdc.[oaupmj]
+	,[oaupmj_conv] = cdc.[oaupmj_conv]
+	,[oajobn] = cdc.[oajobn]
+	,[oajobn_conv] = cdc.[oajobn_conv]
+	,[oaupmt] = cdc.[oaupmt]
+	,[oalnid] = cdc.[oalnid]
+	,[oalnid_conv] = cdc.[oalnid_conv] -- exclude distribution column
+FROM stg_jde_qat.tmp_upsert_f4006_cdc cdc
+WHERE
+    rep_jde_qat.f4006_new.sys_integration_id = cdc.sys_integration_id
+    AND rep_jde_qat.f4006_new.sys_cdc_scn < cdc.sys_cdc_scn 
+OPTION ( LABEL = 'UPDATE_rep_jde_qat.f4006_new AF:{{ task_instance_key_str }}' ) 

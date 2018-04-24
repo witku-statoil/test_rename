@@ -1,0 +1,50 @@
+-- Apply updates from upsert table onto rep new table
+UPDATE rep_jde.f4096_new
+SET
+	[sys_file_name] = cdc.[sys_file_name]
+	,[sys_file_ln] = cdc.[sys_file_ln]
+	,[sys_extract_dt] = cdc.[sys_extract_dt]
+	,[sys_cdc_dt] = cdc.[sys_cdc_dt]
+	,[sys_cdc_scn] = cdc.[sys_cdc_scn]
+	,[sys_cdc_operation_type] = cdc.[sys_cdc_operation_type]
+	,[sys_cdc_before_after] = cdc.[sys_cdc_before_after]
+	,[sys_line_modified_ind] = cdc.[sys_line_modified_ind]
+	,[faanum] = cdc.[faanum]
+	,[faanum_conv] = cdc.[faanum_conv]
+	,[faast] = cdc.[faast]
+	,[faco] = cdc.[faco]
+	,[faco_conv] = cdc.[faco_conv]
+	,[faitem] = cdc.[faitem]
+	,[faitem_conv] = cdc.[faitem_conv]
+	,[faobjf] = cdc.[faobjf]
+	,[faobjf_conv] = cdc.[faobjf_conv]
+	,[faobjt] = cdc.[faobjt]
+	,[faobjt_conv] = cdc.[faobjt_conv]
+	,[fadcto] = cdc.[fadcto]
+	,[fa_1rt] = cdc.[fa_1rt]
+	,[fa_1rt_conv] = cdc.[fa_1rt_conv]
+	,[fael] = cdc.[fael]
+	,[fadl01] = cdc.[fadl01]
+	,[fadl01_conv] = cdc.[fadl01_conv]
+	,[fasblt] = cdc.[fasblt]
+	,[fasegs] = cdc.[fasegs]
+	,[fasfit] = cdc.[fasfit]
+	,[fasfdt] = cdc.[fasfdt]
+	,[faabt1] = cdc.[faabt1]
+	,[faabt1_conv] = cdc.[faabt1_conv]
+	,[fafile] = cdc.[fafile]
+	,[fafile_conv] = cdc.[fafile_conv]
+	,[fapid] = cdc.[fapid]
+	,[fapid_conv] = cdc.[fapid_conv]
+	,[fajobn] = cdc.[fajobn]
+	,[fajobn_conv] = cdc.[fajobn_conv]
+	,[fauser] = cdc.[fauser]
+	,[fauser_conv] = cdc.[fauser_conv]
+	,[faupmj] = cdc.[faupmj]
+	,[faupmj_conv] = cdc.[faupmj_conv]
+	,[fatday] = cdc.[fatday] -- exclude distribution column
+FROM stg_jde.tmp_upsert_f4096_cdc cdc
+WHERE
+    rep_jde.f4096_new.sys_integration_id = cdc.sys_integration_id
+    AND rep_jde.f4096_new.sys_cdc_scn < cdc.sys_cdc_scn 
+OPTION ( LABEL = 'UPDATE_rep_jde.f4096_new AF:{{ task_instance_key_str }}' ) 

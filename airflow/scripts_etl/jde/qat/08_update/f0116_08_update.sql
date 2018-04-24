@@ -1,0 +1,51 @@
+-- Apply updates from upsert table onto rep new table
+UPDATE rep_jde_qat.f0116_new
+SET
+	[sys_file_name] = cdc.[sys_file_name]
+	,[sys_file_ln] = cdc.[sys_file_ln]
+	,[sys_extract_dt] = cdc.[sys_extract_dt]
+	,[sys_cdc_dt] = cdc.[sys_cdc_dt]
+	,[sys_cdc_scn] = cdc.[sys_cdc_scn]
+	,[sys_cdc_operation_type] = cdc.[sys_cdc_operation_type]
+	,[sys_cdc_before_after] = cdc.[sys_cdc_before_after]
+	,[sys_line_modified_ind] = cdc.[sys_line_modified_ind]
+	,[alan8] = cdc.[alan8]
+	,[aleftb] = cdc.[aleftb]
+	,[aleftb_conv] = cdc.[aleftb_conv]
+	,[aleftf] = cdc.[aleftf]
+	,[aleftf_conv] = cdc.[aleftf_conv]
+	,[aladd1] = cdc.[aladd1]
+	,[aladd1_conv] = cdc.[aladd1_conv]
+	,[aladd2] = cdc.[aladd2]
+	,[aladd2_conv] = cdc.[aladd2_conv]
+	,[aladd3] = cdc.[aladd3]
+	,[aladd3_conv] = cdc.[aladd3_conv]
+	,[aladd4] = cdc.[aladd4]
+	,[aladd4_conv] = cdc.[aladd4_conv]
+	,[aladdz] = cdc.[aladdz]
+	,[aladdz_conv] = cdc.[aladdz_conv]
+	,[alcty1] = cdc.[alcty1]
+	,[alcty1_conv] = cdc.[alcty1_conv]
+	,[alcoun] = cdc.[alcoun]
+	,[aladds] = cdc.[aladds]
+	,[alcrte] = cdc.[alcrte]
+	,[alcrte_conv] = cdc.[alcrte_conv]
+	,[albkml] = cdc.[albkml]
+	,[albkml_conv] = cdc.[albkml_conv]
+	,[alctr] = cdc.[alctr]
+	,[aluser] = cdc.[aluser]
+	,[aluser_conv] = cdc.[aluser_conv]
+	,[alpid] = cdc.[alpid]
+	,[alpid_conv] = cdc.[alpid_conv]
+	,[alupmj] = cdc.[alupmj]
+	,[alupmj_conv] = cdc.[alupmj_conv]
+	,[aljobn] = cdc.[aljobn]
+	,[aljobn_conv] = cdc.[aljobn_conv]
+	,[alupmt] = cdc.[alupmt]
+	,[alsyncs] = cdc.[alsyncs]
+	,[alcaad] = cdc.[alcaad] -- exclude distribution column
+FROM stg_jde_qat.tmp_upsert_f0116_cdc cdc
+WHERE
+    rep_jde_qat.f0116_new.sys_integration_id = cdc.sys_integration_id
+    AND rep_jde_qat.f0116_new.sys_cdc_scn < cdc.sys_cdc_scn 
+OPTION ( LABEL = 'UPDATE_rep_jde_qat.f0116_new AF:{{ task_instance_key_str }}' ) 

@@ -1,0 +1,97 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde.f0116_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,alan8
+	,aleftb
+	,aleftb_conv
+	,aleftf
+	,aleftf_conv
+	,aladd1
+	,aladd1_conv
+	,aladd2
+	,aladd2_conv
+	,aladd3
+	,aladd3_conv
+	,aladd4
+	,aladd4_conv
+	,aladdz
+	,aladdz_conv
+	,alcty1
+	,alcty1_conv
+	,alcoun
+	,aladds
+	,alcrte
+	,alcrte_conv
+	,albkml
+	,albkml_conv
+	,alctr
+	,aluser
+	,aluser_conv
+	,alpid
+	,alpid_conv
+	,alupmj
+	,alupmj_conv
+	,aljobn
+	,aljobn_conv
+	,alupmt
+	,alsyncs
+	,alcaad
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.alan8
+	,cdc.aleftb
+	,cdc.aleftb_conv
+	,cdc.aleftf
+	,cdc.aleftf_conv
+	,cdc.aladd1
+	,cdc.aladd1_conv
+	,cdc.aladd2
+	,cdc.aladd2_conv
+	,cdc.aladd3
+	,cdc.aladd3_conv
+	,cdc.aladd4
+	,cdc.aladd4_conv
+	,cdc.aladdz
+	,cdc.aladdz_conv
+	,cdc.alcty1
+	,cdc.alcty1_conv
+	,cdc.alcoun
+	,cdc.aladds
+	,cdc.alcrte
+	,cdc.alcrte_conv
+	,cdc.albkml
+	,cdc.albkml_conv
+	,cdc.alctr
+	,cdc.aluser
+	,cdc.aluser_conv
+	,cdc.alpid
+	,cdc.alpid_conv
+	,cdc.alupmj
+	,cdc.alupmj_conv
+	,cdc.aljobn
+	,cdc.aljobn_conv
+	,cdc.alupmt
+	,cdc.alsyncs
+	,cdc.alcaad
+FROM stg_jde.tmp_upsert_f0116_cdc cdc
+LEFT OUTER JOIN rep_jde.f0116_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde.f0116_new AF:{{ task_instance_key_str }}' ) 

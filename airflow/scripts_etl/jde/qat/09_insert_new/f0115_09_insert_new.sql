@@ -1,0 +1,83 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde_qat.f0115_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,wpan8
+	,wpidln
+	,wpidln_conv
+	,wprck7
+	,wpcnln
+	,wpcnln_conv
+	,wpphtp
+	,wpar1
+	,wpar1_conv
+	,wpph1
+	,wpph1_conv
+	,wpuser
+	,wpuser_conv
+	,wppid
+	,wppid_conv
+	,wpupmj
+	,wpupmj_conv
+	,wpjobn
+	,wpjobn_conv
+	,wpupmt
+	,wpcfno1
+	,wpcfno1_conv
+	,wpgen1
+	,wpgen1_conv
+	,wpfalge
+	,wpfalge_conv
+	,wpsyncs
+	,wpcaad
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.wpan8
+	,cdc.wpidln
+	,cdc.wpidln_conv
+	,cdc.wprck7
+	,cdc.wpcnln
+	,cdc.wpcnln_conv
+	,cdc.wpphtp
+	,cdc.wpar1
+	,cdc.wpar1_conv
+	,cdc.wpph1
+	,cdc.wpph1_conv
+	,cdc.wpuser
+	,cdc.wpuser_conv
+	,cdc.wppid
+	,cdc.wppid_conv
+	,cdc.wpupmj
+	,cdc.wpupmj_conv
+	,cdc.wpjobn
+	,cdc.wpjobn_conv
+	,cdc.wpupmt
+	,cdc.wpcfno1
+	,cdc.wpcfno1_conv
+	,cdc.wpgen1
+	,cdc.wpgen1_conv
+	,cdc.wpfalge
+	,cdc.wpfalge_conv
+	,cdc.wpsyncs
+	,cdc.wpcaad
+FROM stg_jde_qat.tmp_upsert_f0115_cdc cdc
+LEFT OUTER JOIN rep_jde_qat.f0115_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde_qat.f0115_new AF:{{ task_instance_key_str }}' ) 

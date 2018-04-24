@@ -1,0 +1,107 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde_qat.f4070_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,snasn
+	,snoseq
+	,snoseq_conv
+	,snanps
+	,snanps_conv
+	,snast
+	,snurcd
+	,snurcd_conv
+	,snurdt
+	,snurdt_conv
+	,snurat
+	,snurat_conv
+	,snurab
+	,snurab_conv
+	,snurrf
+	,snurrf_conv
+	,sneftj
+	,sneftj_conv
+	,snexdj
+	,snexdj_conv
+	,sninht
+	,sninht_conv
+	,sntier
+	,snuser
+	,snuser_conv
+	,snpid
+	,snpid_conv
+	,snjobn
+	,snjobn_conv
+	,snupmj
+	,snupmj_conv
+	,sntday
+	,snsctype
+	,snsctype_conv
+	,snstprcf
+	,snstprcf_conv
+	,snskipto
+	,snskipto_conv
+	,snskipend
+	,snskipend_conv
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.snasn
+	,cdc.snoseq
+	,cdc.snoseq_conv
+	,cdc.snanps
+	,cdc.snanps_conv
+	,cdc.snast
+	,cdc.snurcd
+	,cdc.snurcd_conv
+	,cdc.snurdt
+	,cdc.snurdt_conv
+	,cdc.snurat
+	,cdc.snurat_conv
+	,cdc.snurab
+	,cdc.snurab_conv
+	,cdc.snurrf
+	,cdc.snurrf_conv
+	,cdc.sneftj
+	,cdc.sneftj_conv
+	,cdc.snexdj
+	,cdc.snexdj_conv
+	,cdc.sninht
+	,cdc.sninht_conv
+	,cdc.sntier
+	,cdc.snuser
+	,cdc.snuser_conv
+	,cdc.snpid
+	,cdc.snpid_conv
+	,cdc.snjobn
+	,cdc.snjobn_conv
+	,cdc.snupmj
+	,cdc.snupmj_conv
+	,cdc.sntday
+	,cdc.snsctype
+	,cdc.snsctype_conv
+	,cdc.snstprcf
+	,cdc.snstprcf_conv
+	,cdc.snskipto
+	,cdc.snskipto_conv
+	,cdc.snskipend
+	,cdc.snskipend_conv
+FROM stg_jde_qat.tmp_upsert_f4070_cdc cdc
+LEFT OUTER JOIN rep_jde_qat.f4070_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde_qat.f4070_new AF:{{ task_instance_key_str }}' ) 

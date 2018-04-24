@@ -1,0 +1,81 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde.f41002_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,ummcu
+	,ummcu_conv
+	,umitm
+	,umum
+	,umrum
+	,umustr
+	,umconv
+	,umconv_conv
+	,umcnv1
+	,umcnv1_conv
+	,umuser
+	,umuser_conv
+	,umpid
+	,umpid_conv
+	,umjobn
+	,umjobn_conv
+	,umupmj
+	,umupmj_conv
+	,umtday
+	,umexpo
+	,umexpo_conv
+	,umexso
+	,umexso_conv
+	,umpupc
+	,umpupc_conv
+	,umsepc
+	,umsepc_conv
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.ummcu
+	,cdc.ummcu_conv
+	,cdc.umitm
+	,cdc.umum
+	,cdc.umrum
+	,cdc.umustr
+	,cdc.umconv
+	,cdc.umconv_conv
+	,cdc.umcnv1
+	,cdc.umcnv1_conv
+	,cdc.umuser
+	,cdc.umuser_conv
+	,cdc.umpid
+	,cdc.umpid_conv
+	,cdc.umjobn
+	,cdc.umjobn_conv
+	,cdc.umupmj
+	,cdc.umupmj_conv
+	,cdc.umtday
+	,cdc.umexpo
+	,cdc.umexpo_conv
+	,cdc.umexso
+	,cdc.umexso_conv
+	,cdc.umpupc
+	,cdc.umpupc_conv
+	,cdc.umsepc
+	,cdc.umsepc_conv
+FROM stg_jde.tmp_upsert_f41002_cdc cdc
+LEFT OUTER JOIN rep_jde.f41002_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde.f41002_new AF:{{ task_instance_key_str }}' ) 

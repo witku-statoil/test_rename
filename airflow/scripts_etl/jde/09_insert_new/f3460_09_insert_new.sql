@@ -1,0 +1,103 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde.f3460_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,mfitm
+	,mflitm
+	,mflitm_conv
+	,mfaitm
+	,mfaitm_conv
+	,mfmcu
+	,mfmcu_conv
+	,mfdrqj
+	,mfdrqj_conv
+	,mfan8
+	,mfuorg
+	,mfuorg_conv
+	,mfaexp
+	,mfaexp_conv
+	,mffam
+	,mffam_conv
+	,mffqt
+	,mffqt_conv
+	,mftypf
+	,mfdcto
+	,mfbpfc
+	,mfbpfc_conv
+	,mfrvis
+	,mfrvis_conv
+	,mfupmj
+	,mfupmj_conv
+	,mfuser
+	,mfuser_conv
+	,mfjobn
+	,mfjobn_conv
+	,mfpid
+	,mfpid_conv
+	,mfyr
+	,mfyr_conv
+	,mftday
+	,mfpmpn
+	,mfpmpn_conv
+	,mfpns
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.mfitm
+	,cdc.mflitm
+	,cdc.mflitm_conv
+	,cdc.mfaitm
+	,cdc.mfaitm_conv
+	,cdc.mfmcu
+	,cdc.mfmcu_conv
+	,cdc.mfdrqj
+	,cdc.mfdrqj_conv
+	,cdc.mfan8
+	,cdc.mfuorg
+	,cdc.mfuorg_conv
+	,cdc.mfaexp
+	,cdc.mfaexp_conv
+	,cdc.mffam
+	,cdc.mffam_conv
+	,cdc.mffqt
+	,cdc.mffqt_conv
+	,cdc.mftypf
+	,cdc.mfdcto
+	,cdc.mfbpfc
+	,cdc.mfbpfc_conv
+	,cdc.mfrvis
+	,cdc.mfrvis_conv
+	,cdc.mfupmj
+	,cdc.mfupmj_conv
+	,cdc.mfuser
+	,cdc.mfuser_conv
+	,cdc.mfjobn
+	,cdc.mfjobn_conv
+	,cdc.mfpid
+	,cdc.mfpid_conv
+	,cdc.mfyr
+	,cdc.mfyr_conv
+	,cdc.mftday
+	,cdc.mfpmpn
+	,cdc.mfpmpn_conv
+	,cdc.mfpns
+FROM stg_jde.tmp_upsert_f3460_cdc cdc
+LEFT OUTER JOIN rep_jde.f3460_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde.f3460_new AF:{{ task_instance_key_str }}' ) 

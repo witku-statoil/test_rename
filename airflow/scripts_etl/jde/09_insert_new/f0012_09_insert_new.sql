@@ -1,0 +1,95 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde.f0012_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,kgitem
+	,kgitem_conv
+	,kgco
+	,kgco_conv
+	,kgmcu
+	,kgmcu_conv
+	,kgobj
+	,kgobj_conv
+	,kgsub
+	,kgsub_conv
+	,kgdl01
+	,kgdl01_conv
+	,kgdl02
+	,kgdl02_conv
+	,kgdl03
+	,kgdl03_conv
+	,kgdl04
+	,kgdl04_conv
+	,kgdl05
+	,kgdl05_conv
+	,kgmopt
+	,kgoopt
+	,kgsopt
+	,kgsy
+	,kgseqn
+	,kguser
+	,kguser_conv
+	,kgpid
+	,kgpid_conv
+	,kgupmj
+	,kgupmj_conv
+	,kgjobn
+	,kgjobn_conv
+	,kgupmt
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.kgitem
+	,cdc.kgitem_conv
+	,cdc.kgco
+	,cdc.kgco_conv
+	,cdc.kgmcu
+	,cdc.kgmcu_conv
+	,cdc.kgobj
+	,cdc.kgobj_conv
+	,cdc.kgsub
+	,cdc.kgsub_conv
+	,cdc.kgdl01
+	,cdc.kgdl01_conv
+	,cdc.kgdl02
+	,cdc.kgdl02_conv
+	,cdc.kgdl03
+	,cdc.kgdl03_conv
+	,cdc.kgdl04
+	,cdc.kgdl04_conv
+	,cdc.kgdl05
+	,cdc.kgdl05_conv
+	,cdc.kgmopt
+	,cdc.kgoopt
+	,cdc.kgsopt
+	,cdc.kgsy
+	,cdc.kgseqn
+	,cdc.kguser
+	,cdc.kguser_conv
+	,cdc.kgpid
+	,cdc.kgpid_conv
+	,cdc.kgupmj
+	,cdc.kgupmj_conv
+	,cdc.kgjobn
+	,cdc.kgjobn_conv
+	,cdc.kgupmt
+FROM stg_jde.tmp_upsert_f0012_cdc cdc
+LEFT OUTER JOIN rep_jde.f0012_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde.f0012_new AF:{{ task_instance_key_str }}' ) 

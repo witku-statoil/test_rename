@@ -1,0 +1,95 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde.f4096_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,faanum
+	,faanum_conv
+	,faast
+	,faco
+	,faco_conv
+	,faitem
+	,faitem_conv
+	,faobjf
+	,faobjf_conv
+	,faobjt
+	,faobjt_conv
+	,fadcto
+	,fa_1rt
+	,fa_1rt_conv
+	,fael
+	,fadl01
+	,fadl01_conv
+	,fasblt
+	,fasegs
+	,fasfit
+	,fasfdt
+	,faabt1
+	,faabt1_conv
+	,fafile
+	,fafile_conv
+	,fapid
+	,fapid_conv
+	,fajobn
+	,fajobn_conv
+	,fauser
+	,fauser_conv
+	,faupmj
+	,faupmj_conv
+	,fatday
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.faanum
+	,cdc.faanum_conv
+	,cdc.faast
+	,cdc.faco
+	,cdc.faco_conv
+	,cdc.faitem
+	,cdc.faitem_conv
+	,cdc.faobjf
+	,cdc.faobjf_conv
+	,cdc.faobjt
+	,cdc.faobjt_conv
+	,cdc.fadcto
+	,cdc.fa_1rt
+	,cdc.fa_1rt_conv
+	,cdc.fael
+	,cdc.fadl01
+	,cdc.fadl01_conv
+	,cdc.fasblt
+	,cdc.fasegs
+	,cdc.fasfit
+	,cdc.fasfdt
+	,cdc.faabt1
+	,cdc.faabt1_conv
+	,cdc.fafile
+	,cdc.fafile_conv
+	,cdc.fapid
+	,cdc.fapid_conv
+	,cdc.fajobn
+	,cdc.fajobn_conv
+	,cdc.fauser
+	,cdc.fauser_conv
+	,cdc.faupmj
+	,cdc.faupmj_conv
+	,cdc.fatday
+FROM stg_jde.tmp_upsert_f4096_cdc cdc
+LEFT OUTER JOIN rep_jde.f4096_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde.f4096_new AF:{{ task_instance_key_str }}' ) 

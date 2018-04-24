@@ -1,0 +1,77 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde.f0014_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,pnptc
+	,pnptc_conv
+	,pnptd
+	,pnptd_conv
+	,pndcp
+	,pndcd
+	,pnndtp
+	,pnddj
+	,pnddj_conv
+	,pnnsp
+	,pndtpa
+	,pneir
+	,pnuser
+	,pnuser_conv
+	,pnpid
+	,pnpid_conv
+	,pnupmj
+	,pnupmj_conv
+	,pnjobn
+	,pnjobn_conv
+	,pnupmt
+	,pnpxdm
+	,pnpxdm_conv
+	,pnpxdd
+	,pnpxdd_conv
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.pnptc
+	,cdc.pnptc_conv
+	,cdc.pnptd
+	,cdc.pnptd_conv
+	,cdc.pndcp
+	,cdc.pndcd
+	,cdc.pnndtp
+	,cdc.pnddj
+	,cdc.pnddj_conv
+	,cdc.pnnsp
+	,cdc.pndtpa
+	,cdc.pneir
+	,cdc.pnuser
+	,cdc.pnuser_conv
+	,cdc.pnpid
+	,cdc.pnpid_conv
+	,cdc.pnupmj
+	,cdc.pnupmj_conv
+	,cdc.pnjobn
+	,cdc.pnjobn_conv
+	,cdc.pnupmt
+	,cdc.pnpxdm
+	,cdc.pnpxdm_conv
+	,cdc.pnpxdd
+	,cdc.pnpxdd_conv
+FROM stg_jde.tmp_upsert_f0014_cdc cdc
+LEFT OUTER JOIN rep_jde.f0014_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde.f0014_new AF:{{ task_instance_key_str }}' ) 

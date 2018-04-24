@@ -1,0 +1,85 @@
+-- Insert new rows from upsert table into rep new table
+INSERT INTO rep_jde.f4906_new
+(
+    	sys_file_name
+	,sys_file_ln
+	,sys_integration_id
+	,sys_extract_dt
+	,sys_cdc_dt
+	,sys_cdc_scn
+	,sys_cdc_operation_type
+	,sys_cdc_before_after
+	,sys_line_modified_ind
+	,cmcars
+	,cmcars_conv
+	,cmscac
+	,cmscac_conv
+	,cmcamd
+	,cmcamd_conv
+	,cmstbf
+	,cmstbf_conv
+	,cmstft
+	,cmrfq1
+	,cmrfq2
+	,cmrndn
+	,cmdwfc
+	,cmdwfc_conv
+	,cmrsla
+	,cmrsla_conv
+	,cmpfsd
+	,cmpfsd_conv
+	,cmprfm
+	,cmprfm_conv
+	,cmuser
+	,cmuser_conv
+	,cmpid
+	,cmpid_conv
+	,cmjobn
+	,cmjobn_conv
+	,cmupmj
+	,cmupmj_conv
+	,cmtday
+)
+SELECT
+    	cdc.sys_file_name
+	,cdc.sys_file_ln
+	,cdc.sys_integration_id
+	,cdc.sys_extract_dt
+	,cdc.sys_cdc_dt
+	,cdc.sys_cdc_scn
+	,cdc.sys_cdc_operation_type
+	,cdc.sys_cdc_before_after
+	,cdc.sys_line_modified_ind
+	,cdc.cmcars
+	,cdc.cmcars_conv
+	,cdc.cmscac
+	,cdc.cmscac_conv
+	,cdc.cmcamd
+	,cdc.cmcamd_conv
+	,cdc.cmstbf
+	,cdc.cmstbf_conv
+	,cdc.cmstft
+	,cdc.cmrfq1
+	,cdc.cmrfq2
+	,cdc.cmrndn
+	,cdc.cmdwfc
+	,cdc.cmdwfc_conv
+	,cdc.cmrsla
+	,cdc.cmrsla_conv
+	,cdc.cmpfsd
+	,cdc.cmpfsd_conv
+	,cdc.cmprfm
+	,cdc.cmprfm_conv
+	,cdc.cmuser
+	,cdc.cmuser_conv
+	,cdc.cmpid
+	,cdc.cmpid_conv
+	,cdc.cmjobn
+	,cdc.cmjobn_conv
+	,cdc.cmupmj
+	,cdc.cmupmj_conv
+	,cdc.cmtday
+FROM stg_jde.tmp_upsert_f4906_cdc cdc
+LEFT OUTER JOIN rep_jde.f4906_new f ON cdc.sys_integration_id = f.sys_integration_id
+WHERE f.sys_integration_id IS NULL
+OPTION ( LABEL = 'INSERT_rep_jde.f4906_new AF:{{ task_instance_key_str }}' ) 
