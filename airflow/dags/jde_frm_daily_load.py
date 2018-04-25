@@ -33,8 +33,6 @@ varStgSchema = 'stg_' + varJDESchema
 
 constFileFilter     = '*' #'{{ ds }}'
 constFileFilterRegex  = '.*' #'{{ ds_nodash }}'
-
-SOMETHING BROKEN HERE
 varDWH_connID = 'bi-eur-dwh-etl-staticrc10'
 
 varAZBlobStorMntPtLanding = '/u01/data/dw-landing-fs' #'/u01/dw-landing-fs'
